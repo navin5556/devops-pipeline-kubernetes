@@ -8,7 +8,7 @@ First create namespace
 ```
 kubectl create ns webapps
 ```
-Create a file named `svm.yaml` using the command `vim svm.yaml`. Then, apply the configuration with the command `kubectl apply -f svm.yaml`.
+Create a file named `svm.yaml` using the command `vim svm.yaml`. Then, apply the configuration with the command `kubectl apply -f svm.yaml -n webapps`.
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -19,7 +19,7 @@ metadata:
 
 ### Create Role 
 
-Create a file named `role.yaml` using the command `vim role.yaml`. Then, apply the configuration with the command `kubectl apply -f role.yaml`.
+Create a file named `role.yaml` using the command `vim role.yaml`. Then, apply the configuration with the command `kubectl apply -f role.yaml -n webapps`.
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -63,7 +63,7 @@ rules:
 
 ### Bind the role to service account
 
-Create a file named `role-bind.yaml` using the command `vim role-bind.yaml`. Then, apply the configuration with the command `kubectl apply -f role-bind.yaml`.
+Create a file named `role-bind.yaml` using the command `vim role-bind.yaml`. Then, apply the configuration with the command `kubectl apply -f role-bind.yaml -n webapps`.
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -81,7 +81,7 @@ subjects:
 ```
 
 ### create secret for jenkins user
-Create a file named `secret.yaml` using the command `vim secret.yaml`. Then, apply the configuration with the command `kubectl apply -f secret.yaml`.
+Create a file named `secret.yaml` using the command `vim secret.yaml`. Then, apply the configuration with the command `kubectl apply -f secret.yaml -n webapps`.
 ```
 apiVersion: v1
 kind: Secret
