@@ -21,8 +21,7 @@ metadata:
 
 ### Create Role 
 
-vim role.yaml
-kubectl apply -f role.yaml
+Create a file named `role.yaml` using the command `vim role.yaml`. Then, apply the configuration with the command `kubectl apply -f role.yaml`.
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
