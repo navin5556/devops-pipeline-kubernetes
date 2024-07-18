@@ -1,5 +1,7 @@
 pipeline {
     agent any
+    //The tools block allows you to specify tools that Jenkins should use for your pipeline. These tools are pre-installed and configured in Jenkins, 
+    // ..and by specifying them in your pipeline, you ensure that the right versions are available during the build process.
     tools {
         jdk 'jdk17'
         maven 'maven3'
@@ -30,9 +32,10 @@ pipeline {
                 sh 'trivy fs --format table -o trivy-fs-report.html .'
             }
         }
+        // before starting this stage we need to configure the sonarqube server first.
         stage('SonarQuble Analysis') {
             steps {
-                withSonarQubeEnv('sonar-server') {
+                withSonarQubeEnv('sonar') {
                     sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=BoardGame -Dsonar.projectKey=BoardGame \
                             -Dsonar.java.binaries=. '''
                 }
@@ -50,7 +53,7 @@ pipeline {
                 sh 'mvn package'
             }
         }
-         stage('Public to nexus') {
+         stage('Publis to nexus') {
             steps {
                 withMaven(globalMavenSettingsConfig: 'global-settings', jdk: 'jdk17', maven: 'maven3', mavenSettingsConfig: '', traceability: true) {
                     sh "mvn deploy"
@@ -89,7 +92,7 @@ pipeline {
                 withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://172.31.21.92:6443') {
                     sh "kubectl get pods -n webapps"
                     sh "kubectl get svc -n webapps"
-                                }
+                }
             }
         }
         
