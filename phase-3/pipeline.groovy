@@ -12,7 +12,7 @@ pipeline {
     }
 
     stages {
-        stage('Gti Checkout') {
+        stage('Git Checkout') {
             steps {
                git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/navin5556/devops-pipeline-boardgame.git'
             }
@@ -80,16 +80,17 @@ pipeline {
                 }
             }
         }
+    //update the ip of serverUrl in below stage by the fetching from this command: root@ip-172-31-30-34:~# cat ~/.kube/config  --> server: https://172.31.30.34:6443
         stage('Deploy To Kubernetes') {
             steps {
-                withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://172.31.21.92:6443') {
+                withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://172.31.30.34:6443') {
                     sh 'kubectl apply -f deployment-service.yaml'  // installed kubectl on jenkins server and created namespace, user and role in k8 cluster manually
                 }
             }
         }
         stage('Verify the Deployment') {
             steps {
-                withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://172.31.21.92:6443') {
+                withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: '', credentialsId: 'k8-cred', namespace: 'webapps', restrictKubeConfigAccess: false, serverUrl: 'https://172.31.30.34:6443') {
                     sh "kubectl get pods -n webapps"
                     sh "kubectl get svc -n webapps"
                 }
