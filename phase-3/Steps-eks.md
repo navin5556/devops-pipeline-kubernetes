@@ -9,7 +9,8 @@ First create namespace
 kubectl create ns webapps
 ```
 
-svm.yaml
+vim svm.yaml
+kubectl apply -f svm.yaml
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
@@ -20,7 +21,8 @@ metadata:
 
 ### Create Role 
 
-role.yaml
+vim role.yaml
+kubectl apply -f role.yaml
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -65,6 +67,7 @@ rules:
 ### Bind the role to service account
 
 role-bind.yaml
+kubectl apply -f role-bind.yaml
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
