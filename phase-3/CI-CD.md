@@ -49,7 +49,7 @@ After installing these plugins, you may need to configure them according to your
 
 ## Configure Above Plugins in Jenkins as per video
 
-Note: there is no any plugin available for tricy so we are installing it on jenkins server and adding our jenkins pipeline stage.
+Note: there is no any plugin available for trivy so we are installing it on jenkins server and adding our jenkins pipeline stage.
 ```
 ---Trivy installation command----
 #reference link - https://aquasecurity.github.io/trivy/v0.18.3/installation/
